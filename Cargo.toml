@@ -12,6 +12,11 @@ description = "Cross-platform interface to the `errno` variable."
 categories = ["no-std", "os"]
 rust-version = "1.56"
 
+[dependencies]
+# Special dependencies used in rustc-dep-of-std mode.
+core = { version = "1.0.0", optional = true, package = "rustc-std-workspace-core" }
+compiler_builtins = { version = "0.1.101", optional = true }
+
 [target.'cfg(unix)'.dependencies]
 libc = { version = "0.2", default-features = false }
 
@@ -31,3 +36,8 @@ libc = { version = "0.2", default-features = false }
 [features]
 default = ["std"]
 std = ["libc/std"]
+
+rustc-dep-of-std = [
+    "dep:core",
+    "compiler_builtins",
+]
